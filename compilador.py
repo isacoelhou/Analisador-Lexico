@@ -1,5 +1,14 @@
+palavras_reservadas = [
+    '_for', '_begin', '_end', '_receba', '_seliga', '_if', '_else', 
+    '_int', '_float', '_bool', '_while', '_true', '_false', '_pot'
+]
+
 def getPalavraReservada(palavra):
-    return
+    if palavra in palavras_reservadas:
+        posicao = palavras_reservadas.index(palavra)        
+        return posicao
+    else:
+        return -1
 
 def getVar(var):
     return
@@ -19,7 +28,12 @@ def getNum(num):
 def getFloat(num):
     return
 
+def adicionar_par(linha, posicao, tipo):
+    tokens.append((linha, posicao, tipo))
+
 token = input("Enter a token: ")
+tokens = []
+linha = 0
 
 match token[0]:
 
@@ -34,7 +48,9 @@ match token[0]:
             getNum(token)
 
     case '_':
-        getPalavraReservada(token)
+        pos = getPalavraReservada(token)
+        if(pos != -1):
+            adicionar_par(linha, pos, 'Palavra Reservada')
 
     case '+' | '-' | '*' | '/':
         getOpAritmetico(token)
@@ -78,8 +94,4 @@ match token[0]:
         else:
             print('ERRO: Não é um token')
         
-
-    
-
-     
-    # case 
+print(tokens)
