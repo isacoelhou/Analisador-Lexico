@@ -37,6 +37,8 @@ def getFloat(num):
     if padrao.match(num):
         if num.count('.') <= 1: #Não pode haver mais de um . na variavel
             return True
+        else:
+            return False
     else:
         return False
 
@@ -53,83 +55,105 @@ def getOpAritmetico(op):
 def adicionar_par(linha, posicao, tipo):
     tokens.append((linha, posicao, tipo))
 
-token = input("Enter a token: ")
 tokens = []
 linha = 0
 
-match token[0]:
+with open('tokens.txt', 'r') as f:
+    for linha_num, linha_conteudo in enumerate(f, start=1):
+        lidos = linha_conteudo.split()
+        for token in lidos:
 
-    case _ if token[0].isalpha():
-        if(getVar(token)):
-            adicionar_par(linha, None, 'Variável')
+            match token[0]:
 
-    case _ if token[0].isdigit():
-        if token.__contains__('.'):
-            if(getFloat(token)):
-                adicionar_par(linha, None, 'Float')
-        else:
-            if(getNum(token)):
-                adicionar_par(linha, None, 'Inteiro')
+                case _ if token[0].isalpha():
+                    if(getVar(token)):
+                        adicionar_par(linha_num, None, 'Variável')
+                    else: 
+                        print('O token', token, 'da linha', linha_num, 'não faz parte da linguagem, verifique a digitação')
 
-    case '_':
-        pos = getPalavraReservada(token)
-        if(pos != -1):
-            adicionar_par(linha, pos, 'Palavra Reservada')
+                case _ if token[0].isdigit():
+                    if token.__contains__('.'):
+                        if(getFloat(token)):
+                            adicionar_par(linha_num, None, 'Float')
+                        else: 
+                            print('O token', token, 'da linha', linha_num, 'não faz parte da linguagem, verifique a digitação')
+                    else:
+                        if(getNum(token)):
+                            adicionar_par(linha_num, None, 'Inteiro')
 
-    case '+' | '-' | '*' | '/':
-        pos = getOpAritmetico(token)
-        if(pos != -1):
-            adicionar_par(linha, pos, 'Operador Aritmético')
+                case '_':
+                    pos = getPalavraReservada(token)
+                    if(pos != -1):
+                        adicionar_par(linha_num, pos, 'Palavra Reservada')
+                    else:
+                        print('O token', token, 'da linha', linha_num, 'não faz parte da linguagem, verifique a digitação')
 
-    case '&' | '|' :
-        if token.lenght() == 1:
-            if token == '&':
-                pos = 0
-            else:
-                pos = 1
-            adicionar_par(linha, pos, 'Operador Lógico')
+                case '+' | '-' | '*' | '/':
+                    pos = getOpAritmetico(token)
+                    if(pos != -1):
+                        adicionar_par(linha_num, pos, 'Operador Aritmético')
+                    else:
+                        print('O token', token, 'da linha', linha_num, 'não faz parte da linguagem, verifique a digitação')    
 
-    case ' ' | '    ':
-        print('espaços')
-    
-    case '(':
-        print('abre parenteses')
+                case '&' | '|' :
+                    if token.lenght() == 1:
+                        if token == '&':
+                            pos = 0
+                        else:
+                            pos = 1
+                        adicionar_par(linha_num, pos, 'Operador Lógico')
 
-    case ')':
-        print('fecha parenteses')
+                case ' ' | '    ':
+                    adicionar_par(linha_num, None, 'Espaços')
+                
+                case '(':
+                    adicionar_par(linha_num, None, 'abre parenteses')
 
-    case '{':
-        print('abre chaves')
+                case ')':
+                    adicionar_par(linha_num, None, 'fecha parenteses')
 
-    case '}':
-        print('fecha chaves')
+                case '{':
+                    adicionar_par(linha_num, None, 'abre chaves')
 
-    case '[':
-        print('abre colchete')
+                case '}':
+                    adicionar_par(linha_num, None, 'fecha chaves')
 
-    case ']':
-        print('fecha colchete')
+                case '[':
+                    adicionar_par(linha_num, None, 'abre colchete')
 
-    case ';':
-        print('ponto e virgula')
+                case ']':
+                    adicionar_par(linha_num, None, 'fecha colchetes')
 
-    case ',':
-        print('virgula')
-    
-    case ':':
-        if token[1] == ':' and token.lengh() == 2:
-            adicionar_par(linha, 0, 'Operador Relacional')
-        else:
-            print('ERRO: Não é um token')
+                case ';':
+                    adicionar_par(linha_num, None, 'ponto e virgula')
 
-    case '>':
-        if token.lenght() == 1:
-            adicionar_par(linha, 1, 'Operador Relacional')
-    
-    case '<':
-        if token.lenght() == 1:
-            adicionar_par(linha, 2, 'Operador Relacional')
+                case ',':
+                    adicionar_par(linha_num, None, 'virgula')
+                
+                case ':':
+                    if token[1] == ':' and token.lengh() == 2:
+                        adicionar_par(linha_num, 0, 'Operador Relacional')
+                    else:                        
+                        print('O token', token, 'da linha', linha_num, 'não faz parte da linguagem, verifique a digitação')
+
+                case '>':
+                    if token.lenght() == 1:
+                        adicionar_par(linha_num, 1, 'Operador Relacional')
+                    else:  
+                        print('O token', token, 'da linha', linha_num, 'não faz parte da linguagem, verifique a digitação')
+                
+                case '<':
+                    if token.lenght() == 1:
+                        adicionar_par(linha_num, 2, 'Operador Relacional')
+                    else:  
+                        print('O token', token, 'da linha', linha_num, 'não faz parte da linguagem, verifique a digitação')
         
-print(tokens)
+print('\nVetores:\n\nPalavras reservadas:', palavras_reservadas, '\n')
+print('Operadores aritméticos: ', operadores_aritmeticos, '\n')
+print('Operadores logicos: ',operadores_logicos, '\n')
+print('Operadores relacionais: ',operadores_relacionais, '\n')
 
-
+with open('tokens_saida.txt', 'w') as saida:
+    for t in tokens:
+        linha, pos, tipo = t
+        saida.write(f"Linha: {linha}, Posição em seu respectivo vetor: {pos}, Tipo: {tipo}\n")
