@@ -131,3 +131,6 @@ match token[0]:
             adicionar_par(linha, 2, 'Operador Relacional')
         
 print(tokens)
+
+
+arquivo = 'listatokens.txt'
