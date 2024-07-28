@@ -133,4 +133,3 @@ match token[0]:
 print(tokens)
 
 
-arquivo = 'listatokens.txt'
