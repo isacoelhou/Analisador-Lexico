@@ -1,7 +1,1 @@
-Linha: 1, Posição em seu respectivo vetor: 0, Tipo: Palavra Reservada
-Linha: 2, Posição em seu respectivo vetor: None, Tipo: Inteiro
-Linha: 3, Posição em seu respectivo vetor: None, Tipo: Variável
-Linha: 4, Posição em seu respectivo vetor: None, Tipo: Inteiro
-Linha: 5, Posição em seu respectivo vetor: 1, Tipo: Palavra Reservada
-Linha: 7, Posição em seu respectivo vetor: None, Tipo: Variável
-Linha: 8, Posição em seu respectivo vetor: None, Tipo: Float
+Linha: 1, Posição em seu respectivo vetor: None, Tipo: Variável

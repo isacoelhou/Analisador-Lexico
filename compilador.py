@@ -61,6 +61,7 @@ linha = 0
 with open('tokens.txt', 'r') as f:
     for linha_num, linha_conteudo in enumerate(f, start=1):
         lidos = linha_conteudo.split()
+        print(lidos)
         for token in lidos:
 
             match token[0]:
