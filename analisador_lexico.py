@@ -98,6 +98,11 @@ while i < len(tokens):
         adicionar_par(linha, None, 'Espaço')
         i += 1
 
+    elif tokens[i] == '	':
+
+        adicionar_par(linha, None, 'Tabulação')
+        i += 1
+
     elif tokens[i].isalpha():
 
         j = i + 1
@@ -192,6 +197,14 @@ while i < len(tokens):
         adicionar_par(linha, None, 'virgula')
         i += 1
 
+    elif tokens[i] == '“':
+        adicionar_par(linha, None, 'Abre Aspas')
+        i += 1
+        
+    elif tokens[i] == '”':
+        adicionar_par(linha, None, 'Fecha Aspas')
+        i += 1
+    
     elif tokens[i] in ['&', '|'] :
         if tokens[i] == '&':
             pos = 0

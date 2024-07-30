@@ -75,14 +75,18 @@ Linha: 12, Posição em seu respectivo vetor: None, Tipo: fecha colchetes
 Linha: 12, Posição em seu respectivo vetor: None, Tipo: fecha parenteses
 Linha: 12, Posição em seu respectivo vetor: None, Tipo: abre chaves
 Linha: 12, Posição em seu respectivo vetor: None, Tipo: Fim de linha
+Linha: 13, Posição em seu respectivo vetor: None, Tipo: Tabulação
 Linha: 13, Posição em seu respectivo vetor: 4, Tipo: Palavra reservada
 Linha: 13, Posição em seu respectivo vetor: None, Tipo: abre parenteses
+Linha: 13, Posição em seu respectivo vetor: None, Tipo: Abre Aspas
 Linha: 13, Posição em seu respectivo vetor: None, Tipo: Variável
 Linha: 13, Posição em seu respectivo vetor: None, Tipo: Espaço
 Linha: 13, Posição em seu respectivo vetor: None, Tipo: Variável
+Linha: 13, Posição em seu respectivo vetor: None, Tipo: Fecha Aspas
 Linha: 13, Posição em seu respectivo vetor: None, Tipo: fecha parenteses
 Linha: 13, Posição em seu respectivo vetor: None, Tipo: ponto e virgula
 Linha: 13, Posição em seu respectivo vetor: None, Tipo: Fim de linha
+Linha: 14, Posição em seu respectivo vetor: None, Tipo: Tabulação
 Linha: 14, Posição em seu respectivo vetor: None, Tipo: Variável
 Linha: 14, Posição em seu respectivo vetor: None, Tipo: Espaço
 Linha: 14, Posição em seu respectivo vetor: None, Tipo: Atribuição
@@ -95,14 +99,18 @@ Linha: 15, Posição em seu respectivo vetor: None, Tipo: Fim de linha
 Linha: 16, Posição em seu respectivo vetor: 6, Tipo: Palavra reservada
 Linha: 16, Posição em seu respectivo vetor: None, Tipo: abre chaves
 Linha: 16, Posição em seu respectivo vetor: None, Tipo: Fim de linha
+Linha: 17, Posição em seu respectivo vetor: None, Tipo: Tabulação
 Linha: 17, Posição em seu respectivo vetor: 4, Tipo: Palavra reservada
 Linha: 17, Posição em seu respectivo vetor: None, Tipo: abre parenteses
+Linha: 17, Posição em seu respectivo vetor: None, Tipo: Abre Aspas
 Linha: 17, Posição em seu respectivo vetor: None, Tipo: Variável
 Linha: 17, Posição em seu respectivo vetor: None, Tipo: Espaço
 Linha: 17, Posição em seu respectivo vetor: None, Tipo: Variável
+Linha: 17, Posição em seu respectivo vetor: None, Tipo: Fecha Aspas
 Linha: 17, Posição em seu respectivo vetor: None, Tipo: fecha parenteses
 Linha: 17, Posição em seu respectivo vetor: None, Tipo: ponto e virgula
 Linha: 17, Posição em seu respectivo vetor: None, Tipo: Fim de linha
+Linha: 18, Posição em seu respectivo vetor: None, Tipo: Tabulação
 Linha: 18, Posição em seu respectivo vetor: None, Tipo: Variável
 Linha: 18, Posição em seu respectivo vetor: None, Tipo: Espaço
 Linha: 18, Posição em seu respectivo vetor: None, Tipo: Atribuição
