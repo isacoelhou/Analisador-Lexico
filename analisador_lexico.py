@@ -166,44 +166,46 @@ while i < len(tokens):
             i += 1
     
     elif tokens[i] == '(':
-        adicionar_par(linha, None, 'abre parenteses')
+        adicionar_par(linha, None, 'Abre Parenteses')
         i += 1
 
     elif tokens[i] == ')':
-        adicionar_par(linha, None, 'fecha parenteses')
+        adicionar_par(linha, None, 'Fecha Parenteses')
         i += 1
 
     elif tokens[i] == '{':
-        adicionar_par(linha, None, 'abre chaves')
+        adicionar_par(linha, None, 'Abre chaves')
         i += 1
 
     elif tokens[i] == '}':
-        adicionar_par(linha, None, 'fecha chaves')
+        adicionar_par(linha, None, 'Fecha chaves')
         i += 1
 
     elif tokens[i] == '[':
-        adicionar_par(linha, None, 'abre colchete')
+        adicionar_par(linha, None, 'Abre colchete')
         i += 1
 
     elif tokens[i] == ']':
-        adicionar_par(linha, None, 'fecha colchetes')
+        adicionar_par(linha, None, 'Fecha colchetes')
         i += 1
 
     elif tokens[i] == ';':
-        adicionar_par(linha, None, 'ponto e virgula')
+        adicionar_par(linha, None, 'Ponto e virgula')
         i += 1
 
     elif tokens[i] == ',':
-        adicionar_par(linha, None, 'virgula')
+        adicionar_par(linha, None, 'Virgula')
         i += 1
 
     elif tokens[i] == '“':
         adicionar_par(linha, None, 'Abre Aspas')
-        i += 1
-        
-    elif tokens[i] == '”':
+        j = i+1
+        while tokens[j] != '”':
+            aux += tokens[j]
+            j += 1
+        adicionar_par(linha, None, 'String')        
         adicionar_par(linha, None, 'Fecha Aspas')
-        i += 1
+        i = j
     
     elif tokens[i] in ['&', '|'] :
         if tokens[i] == '&':
