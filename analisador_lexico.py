@@ -84,7 +84,7 @@ while i < len(tokens):
         
         if(aux.__contains__('.')):
 
-            if(getFloat()):
+            if(getFloat(aux)):
                 adicionar_par(linha, None, 'Float')
             else:
                 print('O token', aux, 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
@@ -147,6 +147,10 @@ while i < len(tokens):
         else:  
             adicionar_par(linha, operadores_relacionais.index('<') , 'Operador Relacional')
             i += 1
+
+    elif tokens[i] == '=':
+        adicionar_par(linha, None, 'Atribuição')
+        i+= 1
     
     elif tokens[i] == '!':
         if tokens[i+1] == '=':
