@@ -1,36 +1,42 @@
-# linha_conteudo = "a b"
+import re
 
-# lista_palavras = ["_token", "linha", "parte", "linguagem", " "]
+palavras_reservadas = [
+    '_for', '_begin', '_end', '_receba', '_seliga', '_if', '_else', 
+    '_int', '_float', '_bool', '_while', '_true', '_false', '_pot'
+]
 
-# string_atual = ""
+operadores_aritmeticos = ['+', '-', '*', '/']
 
-# palavras_extraidas = []
+operadores_relacionais = ['::', '>', '<']
 
-# for caractere in linha_conteudo:
-#     if caractere.isalnum() or caractere == '_':
-#         string_atual += caractere
-#     else:
-#         if string_atual in lista_palavras:
-#             palavras_extraidas.append(string_atual)
-#         string_atual = ""
+operadores_logicos = ['&', '|']
 
-# # Verificar a última palavra após o loop
-# if string_atual in lista_palavras:
-#     palavras_extraidas.append(string_atual)
+def getPalavraReservada(palavra):
+    if palavra in palavras_reservadas:
+        posicao = palavras_reservadas.index(palavra)        
+        return posicao
+    else:
+        return -1
 
-# # Imprimir as palavras extraídas que estão na lista de palavras
-# print(palavras_extraidas)
+def getFloat(num):
+    if num.count('.') <= 1: #Não pode haver mais de um . na variavel
+        return True
+    else:
+        return False
 
-# vetor = lista
-# for i in range listadecaracteres:
+def getOpAritmetico(op):
+    if len(op) > 1:
+        return -1
+    else: 
+        if op in operadores_aritmeticos:
+            posicao = operadores_aritmeticos.index(op)        
+            return posicao
+        else:
+            return -1
+
+def adicionar_par(linha, posicao, tipo):
+    k.append((linha, posicao, tipo))
     
-#     if vetor[i] == "_":
-#         j = 1
-#         while vetor[j] == letras
-#             string += veotr[j]
-#             j++
-#             i = j-1
-#         getToken()
 def ler_caracteres(arquivo):
     tokens = ''
     try:
@@ -39,46 +45,120 @@ def ler_caracteres(arquivo):
                 char = f.read(1)
                 if not char:
                     break
-                #print(char, end='')
                 tokens += char
         return tokens
 
     except FileNotFoundError:
         print(f"Arquivo {arquivo} não encontrado.")
 
-# Exemplo de uso:
 tokens = ler_caracteres('tokens.txt')
 
-
+k = []
 i = 0
+linha = 1
+
 while i < len(tokens):
+
     if tokens[i] == '_':
+
         j = i + 1
         aux = tokens[i]
+
         while j < len(tokens) and tokens[j].isalpha():
             aux += tokens[j]
             j += 1
-        print(f"Encontrado token: {aux}")
+        
+        a = getPalavraReservada (aux)
+        if (a != -1):
+            adicionar_par(linha, a, 'Palavra reservada')
+        else:
+            print('O token', aux, 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
         i = j
+
     elif tokens[i].isdigit():
+
         j = i + 1
         aux = tokens[i]
+
         while j < len(tokens) and (tokens[j].isdigit() or tokens[j] == '.'):
             aux += tokens[j]
             j += 1
-        print(f"Encontrado número: {aux}")
+        
+        if(aux.__contains__('.')):
+
+            if(getFloat()):
+                adicionar_par(linha, None, 'Float')
+            else:
+                print('O token', aux, 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
+
+        else:
+            adicionar_par(linha, None, 'Inteiro')
         i = j
+
     elif tokens[i] == ' ':
-        print('espaço')
-        i += 1
-    elif tokens[i].isalpha():
-        j = i + 1
-        aux = tokens[i]
-        while j < len(tokens) and tokens[j].isalpha():
-            aux += tokens[j]
-            j += 1
-        print(f"Encontrado token: {aux}")      
-        i=j  
-    else:
+
+        adicionar_par(linha, None, 'Espaço')
         i += 1
 
+    elif tokens[i].isalpha():
+
+        j = i + 1
+        aux = tokens[i]
+
+        while j < len(tokens) and tokens[j].isalnum():
+
+            aux += tokens[j]
+            j += 1
+
+        adicionar_par(linha, None, 'Variável')     
+        i = j  
+
+    elif tokens[i] == '\n':
+
+        adicionar_par(linha, None, 'Fim de linha')
+        linha += 1
+        i += 1
+
+    elif tokens[i] in ['+', '-', '*', '/']:
+        pos = getOpAritmetico(tokens[i])
+        if(pos != -1):
+            adicionar_par(linha, pos, 'Operador Aritmético')
+        else:
+            print('O token', tokens[i], 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
+        i += 1
+
+    elif tokens[i] == '(':
+        adicionar_par(linha, None, 'abre parenteses')
+        i += 1
+
+    elif tokens[i] == ')':
+        adicionar_par(linha, None, 'fecha parenteses')
+        i += 1
+
+    elif tokens[i] == '{':
+        adicionar_par(linha, None, 'abre chaves')
+        i += 1
+
+    elif tokens[i] == '}':
+        adicionar_par(linha, None, 'fecha chaves')
+        i += 1
+
+    elif tokens[i] == '[':
+        adicionar_par(linha, None, 'abre colchete')
+        i += 1
+
+    elif tokens[i] == ']':
+        adicionar_par(linha, None, 'fecha colchetes')
+        i += 1
+
+    elif tokens[i] == ';':
+        adicionar_par(linha, None, 'ponto e virgula')
+        i += 1
+
+    elif tokens[i] == ',':
+        adicionar_par(linha, None, 'virgula')
+        i += 1
+        
+    else:
+        i += 1
+print(k)
