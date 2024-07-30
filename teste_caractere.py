@@ -1,5 +1,3 @@
-import re
-
 palavras_reservadas = [
     '_for', '_begin', '_end', '_receba', '_seliga', '_if', '_else', 
     '_int', '_float', '_bool', '_while', '_true', '_false', '_pot'
@@ -158,7 +156,24 @@ while i < len(tokens):
     elif tokens[i] == ',':
         adicionar_par(linha, None, 'virgula')
         i += 1
-        
+
+    elif tokens[i] in ['&', '|'] :
+        if tokens[i] == '&':
+            pos = 0
+        else:
+            pos = 1
+        adicionar_par(linha, pos, 'Operador Lógico')
+                       
     else:
+        print('O token', tokens[i], 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
         i += 1
 print(k)
+print('\nVetores:\n\nPalavras reservadas:', palavras_reservadas, '\n')
+print('Operadores aritméticos: ', operadores_aritmeticos, '\n')
+print('Operadores logicos: ',operadores_logicos, '\n')
+print('Operadores relacionais: ',operadores_relacionais, '\n')
+
+with open('tokens_saida.txt', 'w') as saida:
+    for t in k:
+        linha, pos, tipo = t
+        saida.write(f"Linha: {linha}, Posição em seu respectivo vetor: {pos}, Tipo: {tipo}\n")

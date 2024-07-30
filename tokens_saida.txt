@@ -1,1 +1,5 @@
-Linha: 1, Posição em seu respectivo vetor: None, Tipo: Variável
+Linha: 1, Posição em seu respectivo vetor: None, Tipo: Inteiro
+Linha: 1, Posição em seu respectivo vetor: None, Tipo: Espaço
+Linha: 1, Posição em seu respectivo vetor: 0, Tipo: Operador Aritmético
+Linha: 1, Posição em seu respectivo vetor: None, Tipo: Espaço
+Linha: 1, Posição em seu respectivo vetor: None, Tipo: Inteiro
