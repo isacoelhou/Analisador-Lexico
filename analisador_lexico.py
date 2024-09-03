@@ -5,7 +5,7 @@ palavras_reservadas = [
 
 operadores_aritmeticos = ['+', '-', '*', '/']
 
-operadores_relacionais = ['::', '>', '<', '!=', '<=' '>=']
+operadores_relacionais = ['::', '>', '<', '!=', '<=', '>=']
 
 operadores_logicos = ['&', '|', '!']
 
@@ -33,7 +33,7 @@ def getOpAritmetico(op):
             return -1
 
 def adicionar_par(linha, posicao, tipo):
-    k.append((linha, posicao, tipo))
+    print((linha, posicao, tipo))
     
 def ler_caracteres(arquivo):
     tokens = ''
@@ -136,6 +136,7 @@ while i < len(tokens):
             i += 2
         else:                        
             print('O token', tokens[i], 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
+            i+=1
 
     elif tokens[i] == '>':
         if tokens[i+1] == '=':
@@ -197,16 +198,15 @@ while i < len(tokens):
         adicionar_par(linha, None, 'Virgula')
         i += 1
 
-    elif tokens[i] == '“':
+    elif tokens[i] == '"':
         adicionar_par(linha, None, 'Abre Aspas')
-        j = i+1
-        while tokens[j] != '”':
-            aux += tokens[j]
-            j += 1
+        i += 1
+        while tokens[i] != '"':
+            i+=1
         adicionar_par(linha, None, 'String')        
         adicionar_par(linha, None, 'Fecha Aspas')
-        i = j
-    
+        i+=1
+
     elif tokens[i] in ['&', '|'] :
         if tokens[i] == '&':
             pos = 0
@@ -218,13 +218,13 @@ while i < len(tokens):
         print('O token', tokens[i], 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
         i += 1
 
-print(k)
+#print(k)
 print('\nVetores:\n\nPalavras reservadas:', palavras_reservadas, '\n')
 print('Operadores aritméticos: ', operadores_aritmeticos, '\n')
 print('Operadores logicos: ',operadores_logicos, '\n')
 print('Operadores relacionais: ',operadores_relacionais, '\n')
 
-with open('tokens_saida.txt', 'w') as saida:
-    for t in k:
-        linha, pos, tipo = t
-        saida.write(f"Linha: {linha}, Posição em seu respectivo vetor: {pos}, Tipo: {tipo}\n")
+#with open('tokens_saida.txt', 'w') as saida:
+#    for t in k:
+#        linha, pos, tipo = t
+#        saida.write(f"Linha: {linha}, Posição em seu respectivo vetor: {pos}, Tipo: {tipo}\n")
