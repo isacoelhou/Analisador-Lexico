@@ -17,7 +17,7 @@ def getPalavraReservada(palavra):
         return -1
 
 def getFloat(num):
-    if num.count('.') <= 1: #Não pode haver mais de um . na variavel
+    if num.count('.') <= 1: #Aqui precisa arrumar
         return True
     else:
         return False
@@ -33,7 +33,7 @@ def getOpAritmetico(op):
             return -1
 
 def adicionar_par(linha, posicao, tipo):
-    print((linha, posicao, tipo))
+    print((linha, posicao, tipo)) #em tipo colocar o lexema do token;
     
 def ler_caracteres(arquivo):
     tokens = ''
@@ -203,8 +203,13 @@ while i < len(tokens):
         i += 1
         while tokens[i] != '"':
             i+=1
-        adicionar_par(linha, None, 'String')        
-        adicionar_par(linha, None, 'Fecha Aspas')
+        adicionar_par(linha, None, 'String')
+        #aqui precisa arrumar, se ele não encontrar uma aspas ele precisa para o programa ou demarcar erro e adicionar um fecha aspas   
+        if tokens[i] == '"':
+            adicionar_par(linha, None, 'Fecha Aspas')
+        else:
+            print("Erro léxico, necessita de um fechas aspas na linha %d\n", i)
+            #return erro;
         i+=1
 
     elif tokens[i] in ['&', '|'] :
