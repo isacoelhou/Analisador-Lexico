@@ -5,14 +5,11 @@ palavras_reservadas = [
 
 operadores_aritmeticos = ['+', '-', '*', '/']
 
-operadores_relacionais = ['::', '>', '<', '!=', '<=', '>=']
-
 operadores_logicos = ['&', '|', '!']
 
 def getPalavraReservada(palavra):
-    if palavra in palavras_reservadas:
-        posicao = palavras_reservadas.index(palavra)        
-        return posicao
+    if palavra in palavras_reservadas:    
+        return palavra
     else:
         return -1
 
@@ -27,13 +24,12 @@ def getOpAritmetico(op):
         return -1
     else: 
         if op in operadores_aritmeticos:
-            posicao = operadores_aritmeticos.index(op)        
-            return posicao
+            return op
         else:
             return -1
 
-def adicionar_par(linha, posicao, tipo):
-    print((linha, posicao, tipo)) #em tipo colocar o lexema do token;
+def adicionar_par(linha, tipo):
+    k.append((linha, tipo))
     
 def ler_caracteres(arquivo):
     tokens = ''
@@ -68,7 +64,7 @@ while i < len(tokens):
         
         a = getPalavraReservada (aux)
         if (a != -1):
-            adicionar_par(linha, a, 'Palavra reservada')
+            adicionar_par(linha, a)
         else:
             print('O token', aux, 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
         i = j
@@ -85,22 +81,22 @@ while i < len(tokens):
         if(aux.__contains__('.')):
 
             if(getFloat(aux)):
-                adicionar_par(linha, None, 'Float')
+                adicionar_par(linha, 'Float')
             else:
                 print('O token', aux, 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
 
         else:
-            adicionar_par(linha, None, 'Inteiro')
+            adicionar_par(linha, 'Inteiro')
         i = j
 
     elif tokens[i] == ' ':
 
-        adicionar_par(linha, None, 'Espaço')
+        #adicionar_par(linha, 'Espaço')
         i += 1
 
     elif tokens[i] == '	':
 
-        adicionar_par(linha, None, 'Tabulação')
+        adicionar_par(linha, 'Tabulação')
         i += 1
 
     elif tokens[i].isalpha():
@@ -113,94 +109,93 @@ while i < len(tokens):
             aux += tokens[j]
             j += 1
 
-        adicionar_par(linha, None, 'Variável')     
+        adicionar_par(linha, 'id')     
         i = j  
 
     elif tokens[i] == '\n':
 
-        adicionar_par(linha, None, 'Fim de linha')
+        #adicionar_par(linha, 'Fim de linha')
         linha += 1
         i += 1
 
     elif tokens[i] in ['+', '-', '*', '/']:
         pos = getOpAritmetico(tokens[i])
         if(pos != -1):
-            adicionar_par(linha, pos, 'Operador Aritmético')
+            adicionar_par(linha, pos)
         else:
             print('O token', tokens[i], 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
         i += 1
 
     elif tokens[i] == ':':
         if tokens[i+1] == ':':
-            adicionar_par(linha, operadores_relacionais.index('::') , 'Operador Relacional')
+            adicionar_par(linha, '::')
             i += 2
         else:                        
             print('O token', tokens[i], 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
-            i+=1
 
     elif tokens[i] == '>':
         if tokens[i+1] == '=':
-            adicionar_par(linha, operadores_relacionais.index('>=') , 'Operador Relacional')
+            adicionar_par(linha,'>=' )
             i+=2
         else:  
-            adicionar_par(linha, operadores_relacionais.index('>') , 'Operador Relacional')
+            adicionar_par(linha,'>' )
             i += 1
 
     elif tokens[i] == '<':
         if tokens[i+1] == '=':
-            adicionar_par(linha, operadores_relacionais.index('<=') , 'Operador Relacional')
+            adicionar_par(linha,'<=')
             i+=2
         else:  
-            adicionar_par(linha, operadores_relacionais.index('<') , 'Operador Relacional')
+            adicionar_par(linha,'<')
             i += 1
 
     elif tokens[i] == '=':
-        adicionar_par(linha, None, 'Atribuição')
+        adicionar_par(linha, '=')
         i+= 1
     
     elif tokens[i] == '!':
-        if tokens[i+1] == '=':
-            adicionar_par(linha, operadores_relacionais.index('!=') , 'Operador Relacional')
+        if  [i+1] == '=':
+            adicionar_par(linha, '!=')
             i+=2
         else:  
-            adicionar_par(linha, 2, 'Operador Lógico')
+            adicionar_par(linha, '!')
             i += 1
     
     elif tokens[i] == '(':
-        adicionar_par(linha, None, 'Abre Parenteses')
+        adicionar_par(linha, '(')
         i += 1
 
     elif tokens[i] == ')':
-        adicionar_par(linha, None, 'Fecha Parenteses')
+        adicionar_par(linha, ')')
         i += 1
 
     elif tokens[i] == '{':
-        adicionar_par(linha, None, 'Abre chaves')
+        adicionar_par(linha, '{')
         i += 1
 
     elif tokens[i] == '}':
-        adicionar_par(linha, None, 'Fecha chaves')
+        adicionar_par(linha, '}')
         i += 1
 
     elif tokens[i] == '[':
-        adicionar_par(linha, None, 'Abre colchete')
+        adicionar_par(linha, '[')
         i += 1
 
     elif tokens[i] == ']':
-        adicionar_par(linha, None, 'Fecha colchetes')
+        adicionar_par(linha, ']')
         i += 1
 
     elif tokens[i] == ';':
-        adicionar_par(linha, None, 'Ponto e virgula')
+        adicionar_par(linha, ';')
         i += 1
 
     elif tokens[i] == ',':
-        adicionar_par(linha, None, 'Virgula')
+        adicionar_par(linha,',')
         i += 1
 
-    elif tokens[i] == '"':
-        adicionar_par(linha, None, 'Abre Aspas')
-        i += 1
+    elif tokens[i] == '“':
+        adicionar_par(linha,'“')
+        j = i+1
 
         while i < len(tokens) and tokens[i] != '"':
             i+=1
@@ -212,26 +207,19 @@ while i < len(tokens):
         else:
             print("Erro léxico, necessita de um fechas aspas na linha", linha, "Anter de continuar ajuste o erro...")
             break
-        
-
-    elif tokens[i] in ['&', '|'] :
+    
         if tokens[i] == '&':
-            pos = 0
-        else:
+           adicionar_par(linha,'&')
+        elif tokens[i] == '|':
             pos = 1
-        adicionar_par(linha, pos, 'Operador Lógico')
+        adicionar_par(linha, '|')
                        
     else:
         print('O token', tokens[i], 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
         i += 1
 
-#print(k)
-print('\nVetores:\n\nPalavras reservadas:', palavras_reservadas, '\n')
-print('Operadores aritméticos: ', operadores_aritmeticos, '\n')
-print('Operadores logicos: ',operadores_logicos, '\n')
-print('Operadores relacionais: ',operadores_relacionais, '\n')
 
-#with open('tokens_saida.txt', 'w') as saida:
-#    for t in k:
-#        linha, pos, tipo = t
-#        saida.write(f"Linha: {linha}, Posição em seu respectivo vetor: {pos}, Tipo: {tipo}\n")
+with open('tokens_saida.txt', 'w') as saida:
+    for t in k:
+        linha, pos = t
+        saida.write(f"Linha: {linha}, Valor: {pos}\n")
