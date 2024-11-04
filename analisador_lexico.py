@@ -4,7 +4,6 @@ palavras_reservadas = [
 ]
 
 operadores_aritmeticos = ['+', '-', '*', '/']
-
 operadores_logicos = ['&', '|', '!']
 
 def getPalavraReservada(palavra):
@@ -14,7 +13,7 @@ def getPalavraReservada(palavra):
         return -1
 
 def getFloat(num):
-    if num.count('.') <= 1: #Aqui precisa arrumar
+    if num.count('.') <= 1:
         return True
     else:
         return False
@@ -52,7 +51,6 @@ i = 0
 linha = 1
 
 while i < len(tokens):
-
     if tokens[i] == '_':
 
         j = i + 1
@@ -62,15 +60,14 @@ while i < len(tokens):
             aux += tokens[j]
             j += 1
         
-        a = getPalavraReservada (aux)
-        if (a != -1):
+        a = getPalavraReservada(aux)
+        if a != -1:
             adicionar_par(linha, a)
         else:
             print('O token', aux, 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
         i = j
 
     elif tokens[i].isdigit():
-
         j = i + 1
         aux = tokens[i]
 
@@ -78,86 +75,89 @@ while i < len(tokens):
             aux += tokens[j]
             j += 1
         
-        if(aux.__contains__('.')):
-
-            if(getFloat(aux)):
+        if '.' in aux:
+            if getFloat(aux):
                 adicionar_par(linha, 'num')
             else:
                 print('O token', aux, 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
-
         else:
             adicionar_par(linha, 'num')
         i = j
 
-    elif tokens[i] == ' ':
-
-        #adicionar_par(linha, 'Espaço')
-        i += 1
-
-    elif tokens[i] == '	':
+    elif tokens[i] == ' ' or tokens[i] == '\t':
         i += 1
 
     elif tokens[i].isalpha():
-
         j = i + 1
         aux = tokens[i]
 
         while j < len(tokens) and tokens[j].isalnum():
-
             aux += tokens[j]
             j += 1
 
-        adicionar_par(linha, 'id')     
+        if j < len(tokens) and tokens[j] == ';':
+            aux += tokens[j]
+            j += 1
+
+        adicionar_par(linha, 'id;')     
         i = j  
 
     elif tokens[i] == '\n':
-
-        #adicionar_par(linha, 'Fim de linha')
         linha += 1
         i += 1
 
-    elif tokens[i] in ['+', '-', '*', '/']:
+    elif tokens[i] in operadores_aritmeticos:
         pos = getOpAritmetico(tokens[i])
-        if(pos != -1):
+        if pos != -1:
             adicionar_par(linha, pos)
         else:
             print('O token', tokens[i], 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
         i += 1
 
     elif tokens[i] == ':':
-        if tokens[i+1] == ':':
+        if i + 1 < len(tokens) and tokens[i+1] == ':':
             adicionar_par(linha, '::')
             i += 2
         else:                        
             print('O token', tokens[i], 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
+            i += 1
+
+    elif tokens[i] == '!':
+        # Verificar se "!" é seguido por um identificador
+        if i + 1 < len(tokens) and tokens[i+1].isalpha():
+            j = i + 1
+            aux = tokens[i]
+
+            while j < len(tokens) and tokens[j].isalnum():
+                j += 1
+
+            aux += 'id'
+
+            adicionar_par(linha, aux)
+            i = j
+        else:
+            adicionar_par(linha, '!')
+            i += 1
 
     elif tokens[i] == '>':
-        if tokens[i+1] == '=':
-            adicionar_par(linha,'>=' )
-            i+=2
-        else:  
-            adicionar_par(linha,'>' )
+        if i + 1 < len(tokens) and tokens[i+1] == '=':
+            adicionar_par(linha, '>=')
+            i += 2
+        else:
+            adicionar_par(linha, '>')
             i += 1
 
     elif tokens[i] == '<':
-        if tokens[i+1] == '=':
-            adicionar_par(linha,'<=')
-            i+=2
-        else:  
-            adicionar_par(linha,'<')
+        if i + 1 < len(tokens) and tokens[i+1] == '=':
+            adicionar_par(linha, '<=')
+            i += 2
+        else:
+            adicionar_par(linha, '<')
             i += 1
 
     elif tokens[i] == '=':
         adicionar_par(linha, '=')
-        i+= 1
-    
-    elif tokens[i] == '!':
-        if  [i+1] == '=':
-            adicionar_par(linha, '!=')
-            i+=2
-        else:  
-            adicionar_par(linha, '!')
-            i += 1
+        i += 1
     
     elif tokens[i] == '(':
         adicionar_par(linha, '(')
@@ -180,35 +180,33 @@ while i < len(tokens):
         i += 1
 
     elif tokens[i] == ',':
-        adicionar_par(linha,',')
+        adicionar_par(linha, ',')
         i += 1
 
     elif tokens[i] == '“':
-        adicionar_par(linha,'“')
-        j = i+1
+        adicionar_par(linha, '“')
+        j = i + 1
 
-        while i < len(tokens) and tokens[i] != '"':
-            i+=1
+        while j < len(tokens) and tokens[j] != '"':
+            j += 1
         adicionar_par(linha, 'str')
-        #aqui precisa arrumar, se ele não encontrar uma aspas ele precisa para o programa ou demarcar erro e adicionar um fecha aspas   
-        if i < len(tokens):
+        
+        if j < len(tokens):
             adicionar_par(linha, '"')
-            i+=1
+            i = j + 1
         else:
-            print("Erro léxico, necessita de um fechas aspas na linha", linha, "Anter de continuar ajuste o erro...")
+            print("Erro léxico, necessita de um fecha aspas na linha", linha, "Antes de continuar ajuste o erro...")
             break
-    
-        if tokens[i] == '&':
-           adicionar_par(linha,'&')
-        elif tokens[i] == '|':
-            pos = 1
-        adicionar_par(linha, '|')
+
+    elif tokens[i] in operadores_logicos:
+        adicionar_par(linha, tokens[i])
+        i += 1
                        
     else:
         print('O token', tokens[i], 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
         i += 1
 
-
+# Salva os tokens reconhecidos no arquivo de saída
 with open('tokens_saida.txt', 'w') as saida:
     for t in k:
         linha, pos = t
