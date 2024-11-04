@@ -81,12 +81,12 @@ while i < len(tokens):
         if(aux.__contains__('.')):
 
             if(getFloat(aux)):
-                adicionar_par(linha, 'Float')
+                adicionar_par(linha, 'num')
             else:
                 print('O token', aux, 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
 
         else:
-            adicionar_par(linha, 'Inteiro')
+            adicionar_par(linha, 'num')
         i = j
 
     elif tokens[i] == ' ':
@@ -95,8 +95,6 @@ while i < len(tokens):
         i += 1
 
     elif tokens[i] == '	':
-
-        adicionar_par(linha, 'Tabulação')
         i += 1
 
     elif tokens[i].isalpha():
@@ -177,14 +175,6 @@ while i < len(tokens):
         adicionar_par(linha, '}')
         i += 1
 
-    elif tokens[i] == '[':
-        adicionar_par(linha, '[')
-        i += 1
-
-    elif tokens[i] == ']':
-        adicionar_par(linha, ']')
-        i += 1
-
     elif tokens[i] == ';':
         adicionar_par(linha, ';')
         i += 1
@@ -199,10 +189,10 @@ while i < len(tokens):
 
         while i < len(tokens) and tokens[i] != '"':
             i+=1
-        adicionar_par(linha, None, 'String')
+        adicionar_par(linha, 'str')
         #aqui precisa arrumar, se ele não encontrar uma aspas ele precisa para o programa ou demarcar erro e adicionar um fecha aspas   
         if i < len(tokens):
-            adicionar_par(linha, None, 'Fecha Aspas')
+            adicionar_par(linha, '"')
             i+=1
         else:
             print("Erro léxico, necessita de um fechas aspas na linha", linha, "Anter de continuar ajuste o erro...")
@@ -222,4 +212,4 @@ while i < len(tokens):
 with open('tokens_saida.txt', 'w') as saida:
     for t in k:
         linha, pos = t
-        saida.write(f"Linha: {linha}, Valor: {pos}\n")
+        saida.write(f"{pos}\n")

@@ -3,18 +3,18 @@ _begin
 _int a = 0;
 _int b;
 _bool c = _false;
-_float d = .5;
+_float d = 0.5;
 
 _receba(b);
 a = b + b;
 
 while (!c){
-_if (a :: [2*b]){
-	_seliga("Conta certa,); 
+_if (a :: 2*b){
+	_seliga(“Conta certa"); 
 	c = _true;
 }
 _else{
-	_seliga("Conta Errada,");
+	_seliga(“Conta Errada,");
 	c = _false;
 }
 }
