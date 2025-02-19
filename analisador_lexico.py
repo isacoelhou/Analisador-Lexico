@@ -95,11 +95,7 @@ while i < len(tokens):
             aux += tokens[j]
             j += 1
 
-        if j < len(tokens) and tokens[j] == ';':
-            aux += tokens[j]
-            j += 1
-
-        adicionar_par(linha, 'id;')     
+        adicionar_par(linha, 'id')     
         i = j  
 
     elif tokens[i] == '\n':
@@ -123,19 +119,10 @@ while i < len(tokens):
             i += 1
 
     elif tokens[i] == '!':
-        # Verificar se "!" é seguido por um identificador
-        if i + 1 < len(tokens) and tokens[i+1].isalpha():
-            j = i + 1
-            aux = tokens[i]
-
-            while j < len(tokens) and tokens[j].isalnum():
-                j += 1
-
-            aux += 'id'
-
-            adicionar_par(linha, aux)
-            i = j
-        else:
+        if tokens[i+1] == '=':
+            adicionar_par(linha, '!=')
+            i+=2
+        else:    
             adicionar_par(linha, '!')
             i += 1
 
@@ -187,12 +174,12 @@ while i < len(tokens):
         adicionar_par(linha, '“')
         j = i + 1
 
-        while j < len(tokens) and tokens[j] != '"':
+        while j < len(tokens) and tokens[j] != '”':
             j += 1
         adicionar_par(linha, 'str')
         
         if j < len(tokens):
-            adicionar_par(linha, '"')
+            adicionar_par(linha, '”')
             i = j + 1
         else:
             print("Erro léxico, necessita de um fecha aspas na linha", linha, "Antes de continuar ajuste o erro...")
