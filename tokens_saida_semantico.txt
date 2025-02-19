@@ -1,0 +1,41 @@
+1 palavra reservada _begin
+3 palavra reservada _int
+3 variavel a
+3 Int None
+4 palavra reservada _int
+4 variavel b
+5 palavra reservada _bool
+5 variavel c
+5 palavra reservada _true
+6 palavra reservada _float
+6 variavel d
+6 float None
+8 palavra reservada _receba
+8 variavel b
+9 variavel a
+9 variavel b
+9 Op aritmetico +
+9 variavel b
+11 palavra reservada _while
+11 variavel b
+12 palavra reservada _if
+12 variavel a
+12 Op relacional ::
+12 Int None
+12 Op aritmetico *
+12 variavel b
+12 variavel a
+12 Int None
+13 palavra reservada _seliga
+14 variavel c
+14 palavra reservada _true
+16 palavra reservada _else
+17 palavra reservada _seliga
+17 variavel a
+18 variavel c
+18 palavra reservada _false
+22 variavel b
+22 palavra reservada _pot
+22 variavel a
+22 Int None
+24 palavra reservada _end

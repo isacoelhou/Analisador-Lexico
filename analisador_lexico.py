@@ -27,9 +27,12 @@ def getOpAritmetico(op):
         else:
             return -1
 
-def adicionar_par(linha, tipo):
+def adicionar_par_sintatico(linha, tipo):
     k.append((linha, tipo))
-    
+
+def adiciona_par_semantico(linha, posicao, tipo):
+    semantico.append((linha, tipo, posicao))
+
 def ler_caracteres(arquivo):
     tokens = ''
     try:
@@ -47,6 +50,7 @@ def ler_caracteres(arquivo):
 tokens = ler_caracteres('tokens.txt')
 
 k = []
+semantico = []
 i = 0
 linha = 1
 
@@ -62,7 +66,8 @@ while i < len(tokens):
         
         a = getPalavraReservada(aux)
         if a != -1:
-            adicionar_par(linha, a)
+            adicionar_par_sintatico(linha, a)
+            adiciona_par_semantico(linha, a, 'palavra reservada')
         else:
             print('O token', aux, 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
         i = j
@@ -77,11 +82,14 @@ while i < len(tokens):
         
         if '.' in aux:
             if getFloat(aux):
-                adicionar_par(linha, 'num')
+                adicionar_par_sintatico(linha, 'num')
+                adiciona_par_semantico(linha, None, 'float')
+
             else:
                 print('O token', aux, 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
         else:
-            adicionar_par(linha, 'num')
+            adicionar_par_sintatico(linha, 'num')
+            adiciona_par_semantico(linha, None, 'Int')
         i = j
 
     elif tokens[i] == ' ' or tokens[i] == '\t':
@@ -95,7 +103,9 @@ while i < len(tokens):
             aux += tokens[j]
             j += 1
 
-        adicionar_par(linha, 'id')     
+        adicionar_par_sintatico(linha, 'id')     
+        adiciona_par_semantico(linha, aux, 'variavel')
+
         i = j  
 
     elif tokens[i] == '\n':
@@ -105,14 +115,16 @@ while i < len(tokens):
     elif tokens[i] in operadores_aritmeticos:
         pos = getOpAritmetico(tokens[i])
         if pos != -1:
-            adicionar_par(linha, pos)
+            adicionar_par_sintatico(linha, pos)
+            adiciona_par_semantico(linha, pos, 'Op aritmetico')
         else:
             print('O token', tokens[i], 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
         i += 1
 
     elif tokens[i] == ':':
         if i + 1 < len(tokens) and tokens[i+1] == ':':
-            adicionar_par(linha, '::')
+            adicionar_par_sintatico(linha, '::')
+            adiciona_par_semantico(linha, '::', 'Op relacional')
             i += 2
         else:                        
             print('O token', tokens[i], 'da linha', linha, 'não faz parte da linguagem, verifique a digitação')
@@ -120,73 +132,73 @@ while i < len(tokens):
 
     elif tokens[i] == '!':
         if tokens[i+1] == '=':
-            adicionar_par(linha, '!=')
+            adicionar_par_sintatico(linha, '!=')
             i+=2
         else:    
-            adicionar_par(linha, '!')
+            adicionar_par_sintatico(linha, '!')
             i += 1
 
     elif tokens[i] == '>':
         if i + 1 < len(tokens) and tokens[i+1] == '=':
-            adicionar_par(linha, '>=')
+            adicionar_par_sintatico(linha, '>=')
             i += 2
         else:
-            adicionar_par(linha, '>')
+            adicionar_par_sintatico(linha, '>')
             i += 1
 
     elif tokens[i] == '<':
         if i + 1 < len(tokens) and tokens[i+1] == '=':
-            adicionar_par(linha, '<=')
+            adicionar_par_sintatico(linha, '<=')
             i += 2
         else:
-            adicionar_par(linha, '<')
+            adicionar_par_sintatico(linha, '<')
             i += 1
 
     elif tokens[i] == '=':
-        adicionar_par(linha, '=')
+        adicionar_par_sintatico(linha, '=')
         i += 1
     
     elif tokens[i] == '(':
-        adicionar_par(linha, '(')
+        adicionar_par_sintatico(linha, '(')
         i += 1
 
     elif tokens[i] == ')':
-        adicionar_par(linha, ')')
+        adicionar_par_sintatico(linha, ')')
         i += 1
 
     elif tokens[i] == '{':
-        adicionar_par(linha, '{')
+        adicionar_par_sintatico(linha, '{')
         i += 1
 
     elif tokens[i] == '}':
-        adicionar_par(linha, '}')
+        adicionar_par_sintatico(linha, '}')
         i += 1
 
     elif tokens[i] == ';':
-        adicionar_par(linha, ';')
+        adicionar_par_sintatico(linha, ';')
         i += 1
 
     elif tokens[i] == ',':
-        adicionar_par(linha, ',')
+        adicionar_par_sintatico(linha, ',')
         i += 1
 
     elif tokens[i] == '“':
-        adicionar_par(linha, '“')
+        adicionar_par_sintatico(linha, '“')
         j = i + 1
 
         while j < len(tokens) and tokens[j] != '”':
             j += 1
-        adicionar_par(linha, 'str')
+        adicionar_par_sintatico(linha, 'str')
         
         if j < len(tokens):
-            adicionar_par(linha, '”')
+            adicionar_par_sintatico(linha, '”')
             i = j + 1
         else:
             print("Erro léxico, necessita de um fecha aspas na linha", linha, "Antes de continuar ajuste o erro...")
             break
 
     elif tokens[i] in operadores_logicos:
-        adicionar_par(linha, tokens[i])
+        adicionar_par_sintatico(linha, tokens[i])
         i += 1
                        
     else:
@@ -198,3 +210,7 @@ with open('tokens_saida.txt', 'w') as saida:
     for t in k:
         linha, pos = t
         saida.write(f"{pos}\n")
+
+with open('tokens_saida_semantico.txt', 'w') as saida:
+    for linha, tipo, posicao in semantico:
+        saida.write(f"{linha} {tipo} {posicao}\n")
